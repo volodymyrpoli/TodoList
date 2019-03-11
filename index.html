@@ -3,8 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <title>TodoList</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <script type="application/javascript" src="js/entities.js"></script>
 </head>
 <body>
-    Hello world
+    <div class="main__wrapper">
+        <aside>
+            <h2>Projects</h2>
+            <form onsubmit="createProject(event)" name="projectForm" autocomplete="off">
+                <label>
+                    Project name <br>
+                    <input type="text" name="projectName" placeholder="New project">
+                </label>
+                <input type="submit" value="Create project">
+            </form>
+            <ul id="projectList">
+                <!-- load from localStorage -->
+            </ul>
+        </aside>
+        <main>
+            <h2>Project name</h2>
+            <form onsubmit="createTask(event)" name="tasksForm" autocomplete="off">
+                <label>
+                    Task name <br>
+                    <input type="text" name="taskName" placeholder="New task">
+                </label>
+                <input type="submit" value="Add task">
+            </form>
+            <ul id="projectTasksList">
+                <!-- load from localStorage -->
+            </ul>
+        </main>
+    </div>
+
+    <script type="application/javascript" src="js/api.js"></script>
 </body>
 </html>
