@@ -66,13 +66,32 @@ function fillTasksList(project) {
     const tasksList = document.querySelector('#projectTasksList');
 
     document.querySelector('#currentSelectedProjectName').innerHTML = project.name;
-    tasksList.setAttribute('data-project-id', '' + todoList.getProjectId(project));
-    while (tasksList.hasChildNodes()) {
-        tasksList.firstChild.remove();
-    }
+    tasksList.setAttribute('data-project-id', project.id);
+
+    clearTasksList();
+
     project.tasks.forEach((value) => {
         tasksList.appendChild(createTaskListItem(value));
     });
+}
+
+function clearTasksList() {
+    const tasksList = document.querySelector('#projectTasksList');
+
+    while (tasksList.hasChildNodes()) {
+        tasksList.firstChild.remove();
+    }
+}
+
+function selectOtherProjectIfNowSelected(project) {
+    const currentSelectedProject = document.querySelector('#projectTasksList').dataset.projectId;
+    if (currentSelectedProject && project.id === Number(currentSelectedProject)) {
+        if (todoList.projects[0]) {
+            fillTasksList(todoList.projects[0]);
+        } else {
+            clearTasksList();
+        }
+    }
 }
 
 // listeners
@@ -83,14 +102,13 @@ function onDeleteProject(e) {
         if (project) {
             todoList.removeProject(project);
             e.target.parentElement.remove();
-
-            // TODO select other project
+            debugger;
+            selectOtherProjectIfNowSelected(project);
         }
     }
 }
 
 function onSelectProject(e) {
-    debugger;
     if (e.target.matches('li') && e.target.dataset.projectId) {
         const project = todoList.findProjectById(e.target.dataset.projectId);
         if (project) {
