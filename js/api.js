@@ -1,6 +1,14 @@
-const todoList = new TodoList();
+let todoList = new TodoList();
 
 document.body.onload = () => {
+
+    const td = TodoList.load();
+    if (td) {
+        todoList = td;
+    }
+    setInterval(() => {
+        todoList.save();
+    }, 100);
 
     document.querySelector('#projectList').addEventListener('click', onDeleteProject);
     document.querySelector('#projectList').addEventListener('click', onSelectProject);

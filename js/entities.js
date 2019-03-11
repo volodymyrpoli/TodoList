@@ -1,9 +1,11 @@
 class TodoList {
+    static KEY = 'TodoList';
+    static PROJECT_INDEX = 'ProjectIndex';
+    static TASK_INDEX = 'TaskIndex';
     projects = [];
 
     addProject(project) {
         this.projects.push(project);
-        project.owner = this;
         return this.projects.length - 1;
     }
 
@@ -19,13 +21,39 @@ class TodoList {
         return this.projects.find(value => value.id === Number(id));
     }
 
+    save() {
+        localStorage.setItem(TodoList.KEY, JSON.stringify(this));
+        localStorage.setItem(TodoList.PROJECT_INDEX, Project.last);
+        localStorage.setItem(TodoList.TASK_INDEX, Task.last);
+    }
+
+    static load() {
+        Project.last = Number(localStorage.getItem(TodoList.PROJECT_INDEX));
+        Task.last = Number(localStorage.getItem(TodoList.TASK_INDEX));
+
+        const todoList = new TodoList();
+        const todoListDTO = JSON.parse(localStorage.getItem(TodoList.KEY));
+        todoListDTO.projects.forEach(value => {
+            const project = new Project(value.name);
+            project.id = value.id;
+
+            value.forEach(value2 => {
+                const task = new Task(value2.title, value2.mark);
+                task.mark = value2.mark;
+                project.addTask(task);
+            });
+            todoList.addProject(project);
+        });
+
+        return todoList;
+    }
+
 }
 
 class Project {
     id;
     name;
     tasks = [];
-    owner;
 
     constructor(name) {
         this.name = name;
@@ -35,7 +63,6 @@ class Project {
 
     addTask(task) {
         this.tasks.push(task);
-        task.owner = this;
         return this.tasks.length - 1;
     }
 
@@ -51,10 +78,9 @@ class Project {
         return this.tasks.find(value => value.id === Number(id));
     }
 
-    static ids = [];
+    static last = 0;
     static generateId() {
-        this.ids.push(this.ids.length);
-        return this.ids.length - 1;
+        return this.last++;
     }
 }
 
@@ -62,7 +88,6 @@ class Task {
     id;
     title;
     mark;
-    owner;
 
     constructor(title, mark) {
         this.title = title;
@@ -70,10 +95,9 @@ class Task {
         this.id = Task.generateId();
     }
 
-    static ids = [];
+    static last = 0;
     static generateId() {
-        this.ids.push(this.ids.length);
-        return this.ids.length - 1;
+        return Task.last++;
     }
 }
 
