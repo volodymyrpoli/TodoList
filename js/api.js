@@ -36,7 +36,7 @@ function createTask(e) {
     const taskName = document.forms['tasksForm'].taskName.value;
     const projectId = Number(document.querySelector('#projectTasksList').getAttribute('data-project-id'));
     const task = new Task(taskName);
-    todoList.projects[projectId].addTask(task);
+    todoList.findProjectById(projectId).addTask(task);
     addItemToProjectTaskList(task);
 
     document.forms['tasksForm'].reset();
@@ -116,8 +116,19 @@ function onSelectProject(e) {
         const project = todoList.findProjectById(e.target.dataset.projectId);
         if (project) {
             fillTasksList(project);
+            highlightProject(project);
         }
     }
+}
+
+function highlightProject(project) {
+    const ul = document.querySelector('#projectList');
+    Array.prototype.forEach.call(ul.children, (value) => {
+        value.classList.remove('selected__project');
+        if (Number(value.dataset.projectId) === project.id) {
+            value.classList.add('selected__project');
+        }
+    });
 }
 
 function onDeleteTask(e) {

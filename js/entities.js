@@ -33,13 +33,11 @@ class TodoList {
 
         const todoList = new TodoList();
         const todoListDTO = JSON.parse(localStorage.getItem(TodoList.KEY));
-        todoListDTO.projects.forEach(value => {
-            const project = new Project(value.name);
-            project.id = value.id;
+        todoListDTO.projects.forEach(projectFromDTO => {
+            const project = new Project(projectFromDTO.name, projectFromDTO.id);
 
-            value.tasks.forEach(value2 => {
-                const task = new Task(value2.title, value2.mark);
-                task.mark = value2.mark;
+            projectFromDTO.tasks.forEach(taskFromDTO => {
+                const task = new Task(taskFromDTO.title, taskFromDTO.mark, taskFromDTO.id);
                 project.addTask(task);
             });
             todoList.addProject(project);
@@ -55,10 +53,9 @@ class Project {
     name;
     tasks = [];
 
-    constructor(name) {
+    constructor(name, id) {
         this.name = name;
-        this.tasks = Array.prototype.slice.call(arguments, [1]);
-        this.id = Project.generateId();
+        this.id = id || Project.generateId();
     }
 
     addTask(task) {
@@ -89,10 +86,10 @@ class Task {
     title;
     mark;
 
-    constructor(title, mark) {
+    constructor(title, mark, id) {
         this.title = title;
         this.mark = mark || false;
-        this.id = Task.generateId();
+        this.id = id || Task.generateId();
     }
 
     static last = 0;

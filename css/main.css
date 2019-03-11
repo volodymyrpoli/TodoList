@@ -24,7 +24,7 @@ body {
 }
 
 .list__without__style li:nth-child(even) {
-    background-color: silver;
+    background-color: #f2f2f2;
 }
 
 .project__list {
@@ -55,5 +55,13 @@ body {
 
 input[type=checkbox]:checked ~ span {
     text-decoration: line-through;
-    color: silver;
+    color: #838383;
+}
+
+.selected__project {
+    background-color: #e6e6e6 !important;
+}
+
+.selected__project {
+    font-weight: bold;
 }
