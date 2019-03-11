@@ -7,13 +7,14 @@ document.body.onload = () => {
     document.querySelector('#projectList')
         .addEventListener('click', onSelectProject);
 
-    const project = new Project('Created in code');
-    project.addTask(new Task('some one'), false);
-    project.addTask(new Task('some two'), true);
+    document.querySelector('#projectTasksList')
+        .addEventListener('click', onDeleteTask);
+
+    const project = new Project('Default');
+    project.addTask(new Task('Good first task'), false);
     todoList.addProject(project);
 
-    fillTasksList(project);
-
+    fillTodoList();
 };
 
 function createProject(e) {
@@ -39,7 +40,7 @@ function createTask(e) {
 
 function addItemToProjectList(project, projectId) {
     const projectList = document.querySelector('#projectList');
-    projectList.appendChild(createProjectListItem(project.name, projectId));
+    projectList.appendChild(createProjectListItem(project, projectId));
 }
 
 function addItemToProjectTaskList(task, taskId) {
@@ -47,31 +48,24 @@ function addItemToProjectTaskList(task, taskId) {
     projectTaskList.appendChild(createTaskListItem(task, taskId));
 }
 
-function onDeleteProject(e) {
-    if (e.target.matches('input[type=button]') && e.target.dataset.projectId) {
-        const project = todoList.projects[e.target.dataset.projectId];
-        if (project) {
-            todoList.removeProject(project);
-            e.target.parentElement.remove();
-        }
-    }
-}
+function fillTodoList() {
+    const projectList = document.querySelector('#projectList');
 
-function onSelectProject(e) {
-    console.dir(e);
-    if (e.target.matches('li') && e.target.dataset.projectId) {
-        const project = todoList.projects[e.target.dataset.projectId];
-        if (project) {
-            fillTasksList(project);
-        }
+    while (projectList.hasChildNodes()) {
+        projectList.firstChild.remove();
+    }
+    todoList.projects.forEach((value, index) => {
+       projectList.appendChild(createProjectListItem(value, index));
+    });
+    if (todoList.projects[0]) {
+        fillTasksList(todoList.projects[0]);
     }
 }
 
 function fillTasksList(project) {
     const tasksList = document.querySelector('#projectTasksList');
-    console.log(todoList.getProjectId(project));
-    console.dir(todoList.getProjectId(project));
 
+    document.querySelector('#currentSelectedProjectName').innerHTML = project.name;
     tasksList.setAttribute('data-project-id', '' + todoList.getProjectId(project));
     while (tasksList.hasChildNodes()) {
         tasksList.firstChild.remove();
@@ -81,15 +75,54 @@ function fillTasksList(project) {
     });
 }
 
+// listeners
+
+function onDeleteProject(e) {
+    if (e.target.matches('input[type=button]') && e.target.dataset.projectId) {
+        const project = todoList.projects[e.target.dataset.projectId];
+        if (project) {
+            todoList.removeProject(project);
+            e.target.parentElement.remove();
+
+            // TODO select other project
+        }
+    }
+}
+
+function onSelectProject(e) {
+    if (e.target.matches('li') && e.target.dataset.projectId) {
+        const project = todoList.projects[e.target.dataset.projectId];
+        if (project) {
+            fillTasksList(project);
+        }
+    }
+}
+
+function onDeleteTask(e) {
+    if (e.target.matches('input[type=button]') && e.target.closest('li').dataset.taskId) {
+        const projectId = document.querySelector('#projectTasksList').dataset.projectId;
+        const project = todoList.projects[projectId];
+        const taskId = e.target.closest('li').dataset.taskId;
+        if (projectId && project) {
+            const task = project.tasks[taskId];
+            project.removeTask(task);
+
+            e.target.parentElement.remove();
+        }
+    }
+}
+
+// end - listeners
+
 // create html elements methods
 
-function createProjectListItem(name, id) {
+function createProjectListItem(project, id) {
     const li = document.createElement('li');
     const button = document.createElement('input');
     button.setAttribute('type', 'button');
     button.setAttribute('value', 'Delete');
     button.setAttribute('data-project-id', id);
-    li.innerHTML = name;
+    li.innerHTML = project.name;
     li.setAttribute('data-project-id', id);
     li.appendChild(button);
     return li;
