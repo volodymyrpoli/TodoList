@@ -18,10 +18,6 @@ document.body.onload = () => {
     document.body.addEventListener('blur', onBlurTaskTitle);
     document.body.addEventListener('keydown', onKeyDownOnTitle);
 
-    const project = new Project('Default');
-    project.addTask(new Task('Good first task'), false);
-    todoList.addProject(project);
-
     fillTodoList();
 };
 
@@ -110,7 +106,6 @@ function onDeleteProject(e) {
         if (project) {
             todoList.removeProject(project);
             e.target.parentElement.remove();
-            debugger;
             selectOtherProjectIfNowSelected(project);
         }
     }
@@ -202,8 +197,10 @@ function createTaskListItem(task) {
     const title = document.createElement('span');
     title.setAttribute('contenteditable', 'true');
     title.innerText = task.title;
-    li.appendChild(checkbox);
-    li.appendChild(title);
+    const div = document.createElement('div');
+    div.appendChild(checkbox);
+    div.appendChild(title);
+    li.appendChild(div);
     li.appendChild(removeButton);
     return li;
 }

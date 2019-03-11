@@ -37,7 +37,7 @@ class TodoList {
             const project = new Project(value.name);
             project.id = value.id;
 
-            value.forEach(value2 => {
+            value.tasks.forEach(value2 => {
                 const task = new Task(value2.title, value2.mark);
                 task.mark = value2.mark;
                 project.addTask(task);

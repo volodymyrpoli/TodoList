@@ -8,36 +8,34 @@
     <script type="application/javascript" src="js/entities.js"></script>
 </head>
 <body>
-    <div class="main__wrapper">
-        <aside>
-            <h2>Projects</h2>
-            <form onsubmit="createProject(event)" name="projectForm" autocomplete="off">
-                <label>
-                    Project name <br>
-                    <input type="text" name="projectName" placeholder="New project">
-                </label>
-                <input type="submit" value="Create project">
-            </form>
-            <ul id="projectList">
-                <!-- load from localStorage -->
-            </ul>
-        </aside>
-        <main>
-            <h2>Project name</h2>
-            <form onsubmit="createTask(event)" name="tasksForm" autocomplete="off">
-                <label>
-                    Task name <br>
-                    <input type="text" name="taskName" placeholder="New task">
-                </label>
-                <input type="submit" value="Add task">
-            </form>
-            <h3 id="currentSelectedProjectName"></h3>
-            <ul id="projectTasksList">
-                <!-- load from localStorage -->
-            </ul>
-        </main>
+    <div class="full__size">
+        <div class="main__wrapper">
+            <aside class="project__wrapper">
+                <h2>Projects</h2>
+                <form onsubmit="createProject(event)" name="projectForm" autocomplete="off">
+                    <label>
+                        <input type="text" name="projectName" placeholder="Project name">
+                    </label>
+                    <input type="submit" value="Create">
+                </form>
+                <ul id="projectList" class="list__without__style project__list">
+                    <!-- load from localStorage -->
+                </ul>
+            </aside>
+            <main class="tasks__wrapper">
+                <h2 id="currentSelectedProjectName"></h2>
+                <form onsubmit="createTask(event)" name="tasksForm" autocomplete="off">
+                    <label>
+                        <input type="text" name="taskName" placeholder="Task title">
+                    </label>
+                    <input type="submit" value="Add task">
+                </form>
+                <ul id="projectTasksList" class="list__without__style main__list">
+                    <!-- load from localStorage -->
+                </ul>
+            </main>
+        </div>
     </div>
-
     <script type="application/javascript" src="js/api.js"></script>
 </body>
 </html>
