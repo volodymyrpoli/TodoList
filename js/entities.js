@@ -15,16 +15,6 @@ class TodoList {
         }
     }
 
-    getProjectId(project) {
-        let result = null;
-        this.projects.forEach((value, index) => {
-            if (value === project) {
-                result = index;
-            }
-        });
-        return result;
-    }
-
     findProjectById(id) {
         return this.projects.find(value => value.id === Number(id));
     }
