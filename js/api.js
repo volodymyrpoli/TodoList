@@ -9,6 +9,8 @@ document.body.onload = () => {
 
     document.querySelector('#projectTasksList')
         .addEventListener('click', onDeleteTask);
+    document.querySelector('#projectTasksList')
+        .addEventListener('click', onMarkTask);
 
     const project = new Project('Default');
     project.addTask(new Task('Good first task'), false);
@@ -127,6 +129,19 @@ function onDeleteTask(e) {
             project.removeTask(task);
 
             e.target.parentElement.remove();
+        }
+    }
+}
+
+function onMarkTask(e) {
+    if (e.target.matches('input[type=checkbox]') && e.target.closest('li').dataset.taskId) {
+        const projectId = document.querySelector('#projectTasksList').dataset.projectId;
+        const project = todoList.findProjectById(projectId);
+        const taskId = e.target.closest('li').dataset.taskId;
+        if (projectId && project) {
+            const task = project.findTaskById(taskId);
+            task.mark = e.target.checked;
+            console.dir(task);
         }
     }
 }
