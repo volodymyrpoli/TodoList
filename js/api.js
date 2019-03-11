@@ -11,6 +11,7 @@ document.body.onload = () => {
         .addEventListener('click', onDeleteTask);
     document.querySelector('#projectTasksList')
         .addEventListener('click', onMarkTask);
+    document.body.addEventListener('input', onChangeTaskTitle);
 
     const project = new Project('Default');
     project.addTask(new Task('Good first task'), false);
@@ -146,6 +147,18 @@ function onMarkTask(e) {
     }
 }
 
+function onChangeTaskTitle(e) {
+    if (e.target.matches('span[contenteditable=true]') && e.target.closest('li').dataset.taskId) {
+        const projectId = document.querySelector('#projectTasksList').dataset.projectId;
+        const project = todoList.findProjectById(projectId);
+        const taskId = e.target.closest('li').dataset.taskId;
+        if (projectId && project) {
+            const task = project.findTaskById(taskId);
+            task.title = e.target.innerText;
+        }
+    }
+}
+
 // end - listeners
 
 // create html elements methods
@@ -172,8 +185,11 @@ function createTaskListItem(task) {
     const removeButton = document.createElement('input');
     removeButton.setAttribute('value', 'Delete');
     removeButton.setAttribute('type', 'button');
+    const title = document.createElement('span');
+    title.setAttribute('contenteditable', 'true');
+    title.innerText = task.title;
     li.appendChild(checkbox);
-    li.appendChild(document.createTextNode(task.title));
+    li.appendChild(title);
     li.appendChild(removeButton);
     return li;
 }
