@@ -2,16 +2,13 @@ const todoList = new TodoList();
 
 document.body.onload = () => {
 
-    document.querySelector('#projectList')
-        .addEventListener('click', onDeleteProject);
-    document.querySelector('#projectList')
-        .addEventListener('click', onSelectProject);
+    document.querySelector('#projectList').addEventListener('click', onDeleteProject);
+    document.querySelector('#projectList').addEventListener('click', onSelectProject);
 
-    document.querySelector('#projectTasksList')
-        .addEventListener('click', onDeleteTask);
-    document.querySelector('#projectTasksList')
-        .addEventListener('click', onMarkTask);
-    document.body.addEventListener('input', onChangeTaskTitle);
+    document.querySelector('#projectTasksList').addEventListener('click', onDeleteTask);
+    document.querySelector('#projectTasksList').addEventListener('click', onMarkTask);
+    document.body.addEventListener('blur', onBlurTaskTitle);
+    document.body.addEventListener('keydown', onKeyDownOnTitle);
 
     const project = new Project('Default');
     project.addTask(new Task('Good first task'), false);
@@ -121,40 +118,49 @@ function onSelectProject(e) {
 }
 
 function onDeleteTask(e) {
-    if (e.target.matches('input[type=button]') && e.target.closest('li').dataset.taskId) {
-        const projectId = document.querySelector('#projectTasksList').dataset.projectId;
-        const project = todoList.findProjectById(projectId);
-        const taskId = e.target.closest('li').dataset.taskId;
-        if (projectId && project) {
-            const task = project.findTaskById(taskId);
-            project.removeTask(task);
+    doInMatches(e, 'input[type=button]', (event, project, task) => {
+        project.removeTask(task);
 
-            e.target.parentElement.remove();
-        }
-    }
+        e.target.parentElement.remove();
+    });
 }
 
 function onMarkTask(e) {
-    if (e.target.matches('input[type=checkbox]') && e.target.closest('li').dataset.taskId) {
-        const projectId = document.querySelector('#projectTasksList').dataset.projectId;
-        const project = todoList.findProjectById(projectId);
-        const taskId = e.target.closest('li').dataset.taskId;
-        if (projectId && project) {
-            const task = project.findTaskById(taskId);
-            task.mark = e.target.checked;
-            console.dir(task);
-        }
-    }
+    doInMatches(e, 'input[type=checkbox]', (event, project, task) => {
+        task.mark = e.target.checked;
+    });
 }
 
-function onChangeTaskTitle(e) {
-    if (e.target.matches('span[contenteditable=true]') && e.target.closest('li').dataset.taskId) {
+function onBlurTaskTitle(e) {
+    doInMatches(e, 'span[contenteditable=true]', (event, project, task) => {
+        debugger;
+        task.title = e.target.innerText;
+    });
+}
+
+function onKeyDownOnTitle(e) {
+    doInMatches(e, 'span[contenteditable=true]', (event, project, task) => {
+        if (event.code === 'Enter') {
+            event.preventDefault();
+            task.title = e.target.innerText;
+            event.target.blur();
+        } else if (event.code === 'Escape') {
+            event.preventDefault();
+            e.target.innerText = task.title;
+            event.target.blur();
+        }
+    });
+}
+
+function doInMatches(e, selector, handler) {
+    if (e.target.matches(selector) && e.target.closest('li').dataset.taskId) {
         const projectId = document.querySelector('#projectTasksList').dataset.projectId;
         const project = todoList.findProjectById(projectId);
         const taskId = e.target.closest('li').dataset.taskId;
         if (projectId && project) {
             const task = project.findTaskById(taskId);
-            task.title = e.target.innerText;
+
+            handler(event, project, task);
         }
     }
 }
