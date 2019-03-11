@@ -3,6 +3,7 @@ class TodoList {
 
     addProject(project) {
         this.projects.push(project);
+        project.owner = this;
         return this.projects.length - 1;
     }
 
@@ -25,7 +26,7 @@ class TodoList {
     }
 
     findProjectById(id) {
-        return this.projects.find(value => value.id === id);
+        return this.projects.find(value => value.id === Number(id));
     }
 
 }
@@ -34,6 +35,7 @@ class Project {
     id;
     name;
     tasks = [];
+    owner;
 
     constructor(name) {
         this.name = name;
@@ -43,6 +45,7 @@ class Project {
 
     addTask(task) {
         this.tasks.push(task);
+        task.owner = this;
         return this.tasks.length - 1;
     }
 
@@ -55,7 +58,7 @@ class Project {
     }
 
     findTaskById(id) {
-        return this.tasks.find(value => value.id === id);
+        return this.tasks.find(value => value.id === Number(id));
     }
 
     static ids = [];
@@ -69,6 +72,7 @@ class Task {
     id;
     title;
     mark;
+    owner;
 
     constructor(title, mark) {
         this.title = title;
