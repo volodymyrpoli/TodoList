@@ -23,15 +23,22 @@ class TodoList {
         });
         return result;
     }
+
+    findProjectById(id) {
+        return this.projects.find(value => value.id === id);
+    }
+
 }
 
 class Project {
+    id;
     name;
     tasks = [];
 
     constructor(name) {
         this.name = name;
         this.tasks = Array.prototype.slice.call(arguments, [1]);
+        this.id = Project.generateId();
     }
 
     addTask(task) {
@@ -46,15 +53,33 @@ class Project {
             this.tasks = this.tasks.filter(value => value !== task);
         }
     }
+
+    findTaskById(id) {
+        return this.tasks.find(value => value.id === id);
+    }
+
+    static ids = [];
+    static generateId() {
+        this.ids.push(this.ids.length);
+        return this.ids.length - 1;
+    }
 }
 
 class Task {
+    id;
     title;
     mark;
 
     constructor(title, mark) {
         this.title = title;
         this.mark = mark || false;
+        this.id = Task.generateId();
+    }
+
+    static ids = [];
+    static generateId() {
+        this.ids.push(this.ids.length);
+        return this.ids.length - 1;
     }
 }
 
