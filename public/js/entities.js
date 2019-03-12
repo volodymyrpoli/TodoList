@@ -3,7 +3,7 @@ class TodoList {
 
     addProject(project) {
         const aThis = this;
-        return Repository.createProject(new ProjectDTO(project.name, project.tasks))
+        return Repository.createProject(new ProjectDTO(project.name))
             .then(res => {
                 return res.json();
             })
@@ -123,11 +123,9 @@ class Task {
 
 class ProjectDTO {
     name;
-    tasks = [];
 
-    constructor(name, tasks) {
+    constructor(name) {
         this.name = name || "";
-        this.tasks = tasks || [];
     }
 }
 
