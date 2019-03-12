@@ -9,34 +9,34 @@
     <script type="application/javascript" src="js/repository.js"></script>
 </head>
 <body>
-    <div class="full__size">
-        <div class="main__wrapper">
-            <aside class="project__wrapper">
-                <h2>Projects</h2>
-                <form onsubmit="createProject(event)" name="projectForm" autocomplete="off">
-                    <label>
-                        <input type="text" name="projectName" placeholder="Project name">
-                    </label>
-                    <input type="submit" value="Create">
-                </form>
-                <ul id="projectList" class="list__without__style project__list">
-                    <!-- load from localStorage -->
-                </ul>
-            </aside>
-            <main class="tasks__wrapper">
-                <h2 id="currentSelectedProjectName"></h2>
-                <form onsubmit="createTask(event)" name="tasksForm" autocomplete="off">
-                    <label>
-                        <input type="text" name="taskName" disabled placeholder="Task title">
-                    </label>
-                    <input type="submit" value="Add task" disabled>
-                </form>
-                <ul id="projectTasksList" class="list__without__style main__list">
-                    <!-- load from localStorage -->
-                </ul>
-            </main>
-        </div>
+<div class="full__size">
+    <div class="main__wrapper">
+        <aside class="project__wrapper">
+            <h2>Projects</h2>
+            <form onsubmit="createProject(event)" name="projectForm" autocomplete="off">
+                <label>
+                    <input type="text" name="projectName" placeholder="Project name">
+                </label>
+                <input type="submit" value="Create">
+            </form>
+            <ul id="projectList" class="list__without__style project__list">
+                <!-- load from localStorage -->
+            </ul>
+        </aside>
+        <main class="tasks__wrapper">
+            <h2 id="currentSelectedProjectName"></h2>
+            <form onsubmit="createTask(event)" name="tasksForm" autocomplete="off">
+                <label>
+                    <input type="text" name="taskName" disabled placeholder="Task title">
+                </label>
+                <input type="submit" value="Add task" disabled>
+            </form>
+            <ul id="projectTasksList" class="list__without__style main__list">
+                <!-- load from localStorage -->
+            </ul>
+        </main>
     </div>
-    <script type="application/javascript" src="js/api.js"></script>
+</div>
+<script type="application/javascript" src="js/api.js"></script>
 </body>
 </html>

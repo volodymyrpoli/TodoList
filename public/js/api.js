@@ -55,7 +55,7 @@ function fillTodoList() {
         projectList.firstChild.remove();
     }
     todoList.projects.forEach((value) => {
-       projectList.appendChild(createProjectListItem(value));
+        projectList.appendChild(createProjectListItem(value));
     });
     if (todoList.projects[0]) {
         fillTasksList(todoList.projects[0]);

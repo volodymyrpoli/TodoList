@@ -71,8 +71,8 @@ class Project {
         return Repository.createTask(new TaskDTO(task.title, task.mark, this.id))
             .then(res => res.json())
             .then(taskDTO => {
-               aThis.tasks.push(new Task(taskDTO.title, taskDTO.mark, taskDTO.id));
-               return taskDTO;
+                aThis.tasks.push(new Task(taskDTO.title, taskDTO.mark, taskDTO.id));
+                return taskDTO;
             });
     }
 
