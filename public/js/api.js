@@ -195,6 +195,7 @@ function createProjectListItem(project) {
     button.setAttribute('type', 'button');
     button.setAttribute('value', 'Delete');
     button.setAttribute('data-project-id', project.id);
+    button.classList.add('hide');
     li.innerHTML = project.name;
     li.setAttribute('data-project-id', project.id);
     li.appendChild(button);
@@ -211,6 +212,7 @@ function createTaskListItem(task) {
     const removeButton = document.createElement('input');
     removeButton.setAttribute('value', 'Delete');
     removeButton.setAttribute('type', 'button');
+    removeButton.classList.add('hide');
     const title = document.createElement('span');
     title.setAttribute('contenteditable', 'true');
     title.innerText = task.title;

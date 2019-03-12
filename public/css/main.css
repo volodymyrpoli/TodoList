@@ -9,6 +9,14 @@ input[type=submit] {
     cursor: pointer;
 }
 
+h2 {
+    height: 1em;
+}
+
+.hide {
+    opacity: 0;
+}
+
 .full__size {
     width: 100vw;
     display: flex;
@@ -46,9 +54,22 @@ input[type=submit] {
     cursor: pointer;
 }
 
+.project__list > li:hover > input[type=button] {
+    opacity: 1;
+}
+
 .main__list li {
     display: flex;
     justify-content: space-between;
+}
+
+.main__list > li input[type=checkbox]:checked ~ span {
+    text-decoration: line-through;
+    color: #838383;
+}
+
+.main__list > li:hover > input[type=button] {
+    opacity: 1;
 }
 
 .project__wrapper {
@@ -65,19 +86,7 @@ input[type=submit] {
     height: calc(100vh - 16px);
 }
 
-input[type=checkbox]:checked ~ span {
-    text-decoration: line-through;
-    color: #838383;
-}
-
 .selected__project {
     background-color: #e6e6e6 !important;
-}
-
-.selected__project {
     font-weight: bold;
-}
-
-h2 {
-    height: 1em;
 }

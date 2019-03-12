@@ -2,15 +2,11 @@ class Repository {
     static BASE_URL = window.location.origin;
 
     static getProjects() {
-        return fetch(`${this.BASE_URL}/projects`, {
-            method: 'GET'
-        });
+        return fetch(`${this.BASE_URL}/projects`);
     }
 
     static getTasks() {
-        return fetch(`${this.BASE_URL}/tasks`, {
-            method: 'GET'
-        });
+        return fetch(`${this.BASE_URL}/tasks`);
     }
 
     static createProject(projectDTO) {
