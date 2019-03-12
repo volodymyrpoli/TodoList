@@ -7,11 +7,6 @@
     {
       "name": "hello",
       "id": 2
-    },
-    {
-      "name": "hello",
-      "tasks": [],
-      "id": 3
     }
   ],
   "tasks": [
@@ -20,12 +15,6 @@
       "projectId": 1,
       "title": "Good first task",
       "mark": false
-    },
-    {
-      "title": "new",
-      "mark": false,
-      "projectId": 3,
-      "id": 2
     }
   ]
 }

@@ -10,7 +10,8 @@ document.body.onload = () => {
     document.querySelector('#projectTasksList').addEventListener('blur', onBlurTaskTitle);
     document.querySelector('#projectTasksList').addEventListener('keydown', onKeyDownOnTitle);
 
-    fillTodoList();
+    todoList.load().then(fillTodoList);
+
 };
 
 function createProject(e) {

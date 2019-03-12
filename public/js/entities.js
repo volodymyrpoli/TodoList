@@ -30,6 +30,29 @@ class TodoList {
         return this.projects.find(value => value.id === Number(id));
     }
 
+    load() {
+        const aThis = this;
+        let projectsFromServer;
+        return Repository.getProjects()
+            .then(res => res.json())
+            .then(projects => {
+                projectsFromServer = projects;
+                return Repository.getTasks();
+            })
+            .then(res => res.json())
+            .then(tasks => {
+                for (let i = 0; i < projectsFromServer.length; i++) {
+                    const tProject = new Project(projectsFromServer[i].name, projectsFromServer[i].id, []);
+                    for (let j = 0; j < tasks.length; j++) {
+                        if (tasks[j].projectId === tProject.id) {
+                            tProject.tasks.push(new Task(tasks[j].title, tasks[j].mark, tasks[j].id));
+                        }
+                    }
+                    aThis.projects.push(tProject);
+                }
+            })
+    }
+
 }
 
 class Project {
@@ -54,11 +77,10 @@ class Project {
     }
 
     removeTask(task) {
-        if (typeof task === 'number') {
-            this.tasks = this.tasks.slice(task, task);
-        } else {
-            this.tasks = this.tasks.filter(value => value !== task);
-        }
+        Repository.deleteTask(task.id)
+            .then(taskDTO => {
+                this.tasks = this.tasks.filter(value => value !== task);
+            });
     }
 
     findTaskById(id) {
