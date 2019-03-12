@@ -3,6 +3,12 @@ body {
     margin: 0;
 }
 
+input[type=checkbox],
+input[type=button],
+input[type=submit] {
+    cursor: pointer;
+}
+
 .full__size {
     width: 100vw;
     display: flex;
@@ -35,6 +41,7 @@ body {
 .project__list li {
     display: flex;
     justify-content: space-between;
+    cursor: pointer;
 }
 
 .main__list li {
