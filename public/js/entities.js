@@ -1,6 +1,4 @@
 class TodoList {
-    projects;
-
 
     constructor() {
         this.projects = [];
@@ -61,9 +59,6 @@ class TodoList {
 }
 
 class Project {
-    id;
-    name;
-    tasks;
 
     constructor(name, id, tasks) {
         this.name = name;
@@ -95,9 +90,6 @@ class Project {
 }
 
 class Task {
-    id;
-    title;
-    mark;
 
     constructor(title, mark, id) {
         this.title = title;
@@ -127,7 +119,6 @@ class Task {
 // DTOs
 
 class ProjectDTO {
-    name;
 
     constructor(name) {
         this.name = name || "";
@@ -135,14 +126,12 @@ class ProjectDTO {
 }
 
 class TaskDTO {
-    title;
-    mark;
-    projectId;
 
     constructor(title, mark, projectId) {
         this.title = title || "";
         this.mark = mark || false;
         this.projectId = projectId;
     }
+
 }
 
