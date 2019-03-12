@@ -66,6 +66,7 @@ function fillTasksList(project) {
     const tasksList = document.querySelector('#projectTasksList');
 
     document.querySelector('#currentSelectedProjectName').innerHTML = project.name;
+    document.forms['tasksForm'].querySelectorAll('input').forEach(item => item.disabled = false);
     tasksList.setAttribute('data-project-id', project.id);
 
     clearTasksList();
@@ -84,6 +85,12 @@ function clearTasksList() {
 }
 
 function selectOtherProjectIfNowSelected(project) {
+    if (todoList.projects.length === 0) {
+        document.forms['tasksForm'].querySelectorAll('input').forEach(item => item.disabled = true);
+        document.querySelector('#currentSelectedProjectName').innerHTML = "";
+        return;
+    }
+
     const currentSelectedProject = document.querySelector('#projectTasksList').dataset.projectId;
     if (currentSelectedProject && project.id === Number(currentSelectedProject)) {
         if (todoList.projects[0]) {

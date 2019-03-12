@@ -27,9 +27,9 @@
                 <h2 id="currentSelectedProjectName"></h2>
                 <form onsubmit="createTask(event)" name="tasksForm" autocomplete="off">
                     <label>
-                        <input type="text" name="taskName" placeholder="Task title">
+                        <input type="text" name="taskName" disabled placeholder="Task title">
                     </label>
-                    <input type="submit" value="Add task">
+                    <input type="submit" value="Add task" disabled>
                 </form>
                 <ul id="projectTasksList" class="list__without__style main__list">
                     <!-- load from localStorage -->

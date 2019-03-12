@@ -1,26 +1,4 @@
 {
-  "projects": [
-    {
-      "id": 1,
-      "name": "Default"
-    },
-    {
-      "name": "hello",
-      "id": 2
-    }
-  ],
-  "tasks": [
-    {
-      "id": 1,
-      "projectId": 1,
-      "title": "Good first task",
-      "mark": true
-    },
-    {
-      "title": "hello",
-      "mark": true,
-      "projectId": 2,
-      "id": 2
-    }
-  ]
+  "projects": [],
+  "tasks": []
 }
