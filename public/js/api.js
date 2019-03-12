@@ -138,7 +138,8 @@ function onDeleteTask(e) {
 
 function onMarkTask(e) {
     doInMatches(e, 'input[type=checkbox]', (event, project, task) => {
-        task.mark = e.target.checked;
+        task.setMark(e.target.checked)
+            .then(newMark => e.target.checked = newMark);
     });
 }
 

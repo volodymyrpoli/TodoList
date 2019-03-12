@@ -99,6 +99,15 @@ class Task {
         this.mark = mark || false;
         this.id = id;
     }
+
+    setMark(value) {
+        return Repository.changeMarkForTask(this, value)
+            .then(res => res.json())
+            .then(newTask => {
+                this.mark = newTask.mark;
+                return this.mark;
+            });
+    }
 }
 
 // DTOs

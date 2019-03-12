@@ -59,5 +59,15 @@ class Repository {
         });
     }
 
+    static changeMarkForTask(task, mark) {
+        const headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        return fetch(`${this.BASE_URL}/tasks/${task.id}`, {
+            method: 'PATCH',
+            body: JSON.stringify({ mark: mark }),
+            headers: headers
+        });
+    }
+
 
 }
