@@ -152,8 +152,8 @@ function onMarkTask(e) {
 
 function onBlurTaskTitle(e) {
     doInMatches(e, 'span[contenteditable=true]', (event, project, task) => {
-        debugger;
-        task.title = e.target.innerText;
+        task.setTitle(e.target.innerText)
+            .then(title => e.target.innerText = title);
     });
 }
 
@@ -161,7 +161,8 @@ function onKeyDownOnTitle(e) {
     doInMatches(e, 'span[contenteditable=true]', (event, project, task) => {
         if (event.code === 'Enter') {
             event.preventDefault();
-            task.title = e.target.innerText;
+            task.setTitle(e.target.innerText)
+                .then(title => e.target.innerText = title);
             event.target.blur();
         } else if (event.code === 'Escape') {
             event.preventDefault();

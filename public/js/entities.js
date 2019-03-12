@@ -108,6 +108,15 @@ class Task {
                 return this.mark;
             });
     }
+
+    setTitle(title) {
+        return Repository.changeTaskName(this, title)
+            .then(res => res.json())
+            .then(task => {
+                this.title = task.title;
+                return task.title;
+            })
+    }
 }
 
 // DTOs

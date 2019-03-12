@@ -1,4 +1,40 @@
 {
-  "projects": [],
-  "tasks": []
+  "projects": [
+    {
+      "name": "new",
+      "tasks": [],
+      "id": 1
+    },
+    {
+      "name": "project",
+      "tasks": [],
+      "id": 2
+    }
+  ],
+  "tasks": [
+    {
+      "title": "hello",
+      "mark": true,
+      "projectId": 1,
+      "id": 1
+    },
+    {
+      "title": "two",
+      "mark": true,
+      "projectId": 1,
+      "id": 2
+    },
+    {
+      "title": "second",
+      "mark": true,
+      "projectId": 1,
+      "id": 3
+    },
+    {
+      "title": "other",
+      "mark": false,
+      "projectId": 1,
+      "id": 4
+    }
+  ]
 }

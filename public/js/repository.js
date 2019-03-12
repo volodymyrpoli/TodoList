@@ -7,20 +7,8 @@ class Repository {
         });
     }
 
-    static getProject(id) {
-        return fetch(`${this.BASE_URL}/projects/${id}`, {
-            method: 'GET'
-        });
-    }
-
     static getTasks() {
         return fetch(`${this.BASE_URL}/tasks`, {
-            method: 'GET'
-        });
-    }
-
-    static getTask(id) {
-        return fetch(`${this.BASE_URL}/tasks/${id}`, {
             method: 'GET'
         });
     }
@@ -60,14 +48,21 @@ class Repository {
     }
 
     static changeMarkForTask(task, mark) {
+        return this.updateFields(`${this.BASE_URL}/tasks/${task.id}`, { mark: mark });
+    }
+
+    static changeTaskName(task, title) {
+        return this.updateFields(`${this.BASE_URL}/tasks/${task.id}`, { title: title });
+    }
+
+    static updateFields(url, fields) {
         const headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        return fetch(`${this.BASE_URL}/tasks/${task.id}`, {
+        return fetch(url, {
             method: 'PATCH',
-            body: JSON.stringify({ mark: mark }),
+            body: JSON.stringify(fields),
             headers: headers
         });
     }
-
 
 }
