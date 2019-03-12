@@ -1,37 +1,37 @@
 {
   "projects": [
     {
-      "name": "new",
+      "name": "Default",
       "tasks": [],
       "id": 1
     },
     {
-      "name": "project",
+      "name": "Good new project",
       "tasks": [],
       "id": 2
     }
   ],
   "tasks": [
     {
-      "title": "hello",
+      "title": "Say hello",
       "mark": true,
       "projectId": 1,
       "id": 1
     },
     {
-      "title": "two",
+      "title": "Say world",
       "mark": true,
       "projectId": 1,
       "id": 2
     },
     {
-      "title": "second",
+      "title": "Say hello world",
       "mark": true,
       "projectId": 1,
       "id": 3
     },
     {
-      "title": "other",
+      "title": "Say something good",
       "mark": false,
       "projectId": 1,
       "id": 4
