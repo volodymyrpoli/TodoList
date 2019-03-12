@@ -1,5 +1,10 @@
 class TodoList {
-    projects = [];
+    projects;
+
+
+    constructor() {
+        this.projects = [];
+    }
 
     addProject(project) {
         const aThis = this;
@@ -58,7 +63,7 @@ class TodoList {
 class Project {
     id;
     name;
-    tasks = [];
+    tasks;
 
     constructor(name, id, tasks) {
         this.name = name;
