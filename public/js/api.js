@@ -99,9 +99,10 @@ function onDeleteProject(e) {
     if (e.target.matches('input[type=button]') && e.target.dataset.projectId) {
         const project = todoList.findProjectById(e.target.dataset.projectId);
         if (project) {
-            todoList.removeProject(project);
-            e.target.parentElement.remove();
-            selectOtherProjectIfNowSelected(project);
+            todoList.removeProject(project).then(projectDTO => {
+                e.target.parentElement.remove();
+                selectOtherProjectIfNowSelected(project);
+            });
         }
     }
 }

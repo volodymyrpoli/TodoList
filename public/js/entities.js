@@ -1,7 +1,4 @@
 class TodoList {
-    static KEY = 'TodoList';
-    static PROJECT_INDEX = 'ProjectIndex';
-    static TASK_INDEX = 'TaskIndex';
     projects = [];
 
     addProject(project) {
@@ -22,40 +19,15 @@ class TodoList {
     }
 
     removeProject(project) {
-        if (typeof project === 'number') {
-            this.projects = this.projects.slice(project, project);
-        } else {
-            this.projects = this.projects.filter(value => value !== project);
-        }
+        return Repository.deleteProject(project.id)
+            .then(res => {
+                this.projects = this.projects.filter(value => value !== project);
+                return res.json();
+            });
     }
 
     findProjectById(id) {
         return this.projects.find(value => value.id === Number(id));
-    }
-
-    save() {
-        localStorage.setItem(TodoList.KEY, JSON.stringify(this));
-        localStorage.setItem(TodoList.PROJECT_INDEX, Project.last);
-        localStorage.setItem(TodoList.TASK_INDEX, Task.last);
-    }
-
-    static load() {
-        Project.last = Number(localStorage.getItem(TodoList.PROJECT_INDEX));
-        Task.last = Number(localStorage.getItem(TodoList.TASK_INDEX));
-
-        const todoList = new TodoList();
-        const todoListDTO = JSON.parse(localStorage.getItem(TodoList.KEY));
-        todoListDTO.projects.forEach(projectFromDTO => {
-            const project = new Project(projectFromDTO.name, projectFromDTO.id);
-
-            projectFromDTO.tasks.forEach(taskFromDTO => {
-                const task = new Task(taskFromDTO.title, taskFromDTO.mark, taskFromDTO.id);
-                project.addTask(task);
-            });
-            todoList.addProject(project);
-        });
-
-        return todoList;
     }
 
 }
@@ -73,7 +45,7 @@ class Project {
 
     addTask(task) {
         const aThis = this;
-        return Repository.createTask(new TaskDTO(task.title, task.mark))
+        return Repository.createTask(new TaskDTO(task.title, task.mark, this.id))
             .then(res => res.json())
             .then(taskDTO => {
                aThis.tasks.push(new Task(taskDTO.title, taskDTO.mark, taskDTO.id));
@@ -93,10 +65,6 @@ class Project {
         return this.tasks.find(value => value.id === Number(id));
     }
 
-    static last = 0;
-    static generateId() {
-        return this.last++;
-    }
 }
 
 class Task {
@@ -107,14 +75,11 @@ class Task {
     constructor(title, mark, id) {
         this.title = title;
         this.mark = mark || false;
-        this.id = id || Task.generateId();
-    }
-
-    static last = 0;
-    static generateId() {
-        return Task.last++;
+        this.id = id;
     }
 }
+
+// DTOs
 
 class ProjectDTO {
     name;
@@ -129,10 +94,12 @@ class ProjectDTO {
 class TaskDTO {
     title;
     mark;
+    projectId;
 
-    constructor(title, mark) {
+    constructor(title, mark, projectId) {
         this.title = title || "";
         this.mark = mark || false;
+        this.projectId = projectId;
     }
 }
 
