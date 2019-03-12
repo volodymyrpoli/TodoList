@@ -2,14 +2,6 @@ let todoList = new TodoList();
 
 document.body.onload = () => {
 
-    const td = TodoList.load();
-    if (td) {
-        todoList = td;
-    }
-    setInterval(() => {
-        todoList.save();
-    }, 100);
-
     document.querySelector('#projectList').addEventListener('click', onDeleteProject);
     document.querySelector('#projectList').addEventListener('click', onSelectProject);
 
@@ -25,8 +17,9 @@ function createProject(e) {
     e.preventDefault();
     const projectName = document.forms['projectForm'].projectName.value;
     const project = new Project(projectName);
-    todoList.addProject(project);
-    addItemToProjectList(project);
+    todoList.addProject(project).then(projectDTO => {
+        addItemToProjectList(projectDTO);
+    });
 
     document.forms['projectForm'].reset();
 }
@@ -36,8 +29,10 @@ function createTask(e) {
     const taskName = document.forms['tasksForm'].taskName.value;
     const projectId = Number(document.querySelector('#projectTasksList').getAttribute('data-project-id'));
     const task = new Task(taskName);
-    todoList.findProjectById(projectId).addTask(task);
-    addItemToProjectTaskList(task);
+    todoList.findProjectById(projectId).addTask(task)
+        .then(taskFromServer => {
+            addItemToProjectTaskList(taskFromServer);
+        });
 
     document.forms['tasksForm'].reset();
 }

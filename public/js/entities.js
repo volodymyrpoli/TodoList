@@ -5,8 +5,20 @@ class TodoList {
     projects = [];
 
     addProject(project) {
-        this.projects.push(project);
-        return this.projects.length - 1;
+        const aThis = this;
+        return Repository.createProject(new ProjectDTO(project.name, project.tasks))
+            .then(res => {
+                return res.json();
+            })
+            .then(createdProject => {
+                console.log(aThis);
+                aThis.projects.push(new Project(
+                    createdProject.name,
+                    createdProject.id,
+                    createdProject.tasks
+                ));
+                return createdProject;
+            });
     }
 
     removeProject(project) {
@@ -53,14 +65,20 @@ class Project {
     name;
     tasks = [];
 
-    constructor(name, id) {
+    constructor(name, id, tasks) {
         this.name = name;
-        this.id = id || Project.generateId();
+        this.id = id;
+        this.tasks = tasks || [];
     }
 
     addTask(task) {
-        this.tasks.push(task);
-        return this.tasks.length - 1;
+        const aThis = this;
+        return Repository.createTask(new TaskDTO(task.title, task.mark))
+            .then(res => res.json())
+            .then(taskDTO => {
+               aThis.tasks.push(new Task(taskDTO.title, taskDTO.mark, taskDTO.id));
+               return taskDTO;
+            });
     }
 
     removeTask(task) {
@@ -95,6 +113,26 @@ class Task {
     static last = 0;
     static generateId() {
         return Task.last++;
+    }
+}
+
+class ProjectDTO {
+    name;
+    tasks = [];
+
+    constructor(name, tasks) {
+        this.name = name || "";
+        this.tasks = tasks || [];
+    }
+}
+
+class TaskDTO {
+    title;
+    mark;
+
+    constructor(title, mark) {
+        this.title = title || "";
+        this.mark = mark || false;
     }
 }
 

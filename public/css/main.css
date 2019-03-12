@@ -65,3 +65,7 @@ input[type=checkbox]:checked ~ span {
 .selected__project {
     font-weight: bold;
 }
+
+h2 {
+    height: 1em;
+}
