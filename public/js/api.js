@@ -15,8 +15,8 @@ document.body.onload = () => {
 
     document.querySelector('#projectTasksList').addEventListener('click', onDeleteTask);
     document.querySelector('#projectTasksList').addEventListener('click', onMarkTask);
-    document.body.addEventListener('blur', onBlurTaskTitle);
-    document.body.addEventListener('keydown', onKeyDownOnTitle);
+    document.querySelector('#projectTasksList').addEventListener('blur', onBlurTaskTitle);
+    document.querySelector('#projectTasksList').addEventListener('keydown', onKeyDownOnTitle);
 
     fillTodoList();
 };
